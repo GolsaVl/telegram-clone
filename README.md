@@ -5,8 +5,6 @@
 [![Repo Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![GitHub Repo stars](https://img.shields.io/github/stars/GolsaVl/telegram-clone?style=social)](https://github.com/GolsaVl/telegram-clone)
 
-![Messengerr Screenshot Placeholder](https://via.placeholder.com/800x400.png?text=Messengerr+App+Screenshot)
-*(Replace the placeholder above with an actual screenshot of your application)*
 
 ## Overview
 
