@@ -25,7 +25,6 @@ export const useChat = (chatId?: string) => {
     messages: storedMessages,
   } = useChatStore();
 
-  
   useEffect(() => {
     if (!chatId) {
       setCurrentChat(null);
@@ -41,35 +40,30 @@ export const useChat = (chatId?: string) => {
 
     if (chat) {
       setCurrentChat(chat);
-      setMessages(chatId, messagesForChat); 
+      setMessages(chatId, messagesForChat);
     } else {
       setError(`Chat with ID ${chatId} not found.`);
       setCurrentChat(null);
-      setMessages(chatId, []); 
+      setMessages(chatId, []);
     }
     setLoading(false);
   }, [chatId, setCurrentChat, setMessages]);
 
-  
   useEffect(() => {
     if (!socket || !isConnected || !chatId) return;
 
-    
     socket.emit("join_chat", chatId);
 
-    
     const handleNewMessage = (message: Message) => {
       if (message.chatId === chatId) {
         addMessage(chatId, message);
       }
     };
 
-    
     const handleTyping = (data: { userId: string; username: string }) => {
       if (data.userId !== user?.id) {
         setTyping(data.username);
 
-        
         if (typingTimeout) {
           window.clearTimeout(typingTimeout);
         }
@@ -85,7 +79,6 @@ export const useChat = (chatId?: string) => {
     socket.on("new_message", handleNewMessage);
     socket.on("typing", handleTyping);
 
-    
     return () => {
       socket.off("new_message", handleNewMessage);
       socket.off("typing", handleTyping);
@@ -95,12 +88,20 @@ export const useChat = (chatId?: string) => {
         window.clearTimeout(typingTimeout);
       }
     };
-  }, [socket, isConnected, chatId, user?.id, typingTimeout, addMessage, setTyping, setTypingTimeout]); 
+  }, [
+    socket,
+    isConnected,
+    chatId,
+    user?.id,
+    typingTimeout,
+    addMessage,
+    setTyping,
+    setTypingTimeout,
+  ]);
 
-  
   const sendMessage = (
-    content: string, 
-    type: Message['type'] = "text",
+    content: string,
+    type: Message["type"] = "text",
     url?: string,
     fileName?: string,
     fileSize?: string | number,
@@ -110,14 +111,14 @@ export const useChat = (chatId?: string) => {
     if (!chatId || !user) return;
 
     const newMessage: Message = {
-      id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`, 
+      id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       chatId,
       senderId: currentUserId,
       senderName: currentUsername,
-      content, 
+      content,
       type,
       timestamp: new Date().toISOString(),
-      status: "sent", 
+      status: "sent",
       ...(url && { url }),
       ...(fileName && { fileName }),
       ...(fileSize && { fileSize }),
@@ -125,17 +126,14 @@ export const useChat = (chatId?: string) => {
       ...(longitude && { longitude }),
     };
 
-    
     addMessage(chatId, newMessage);
 
-    
     if (storedCurrentChat) {
       const otherParticipants = storedCurrentChat.participants.filter(
         (p) => p.id !== currentUserId,
       );
 
       if (otherParticipants.length > 0) {
-        
         const respondingParticipant = otherParticipants[0];
         const mockResponseContent = [
           "Got it!",
@@ -146,25 +144,30 @@ export const useChat = (chatId?: string) => {
           "👍",
           "😄",
         ];
-        const randomResponse = mockResponseContent[Math.floor(Math.random() * mockResponseContent.length)];
+        const randomResponse =
+          mockResponseContent[
+            Math.floor(Math.random() * mockResponseContent.length)
+          ];
 
-        setTimeout(() => {
-          const responseMessage: Message = {
-            id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 7)}-response`,
-            chatId,
-            senderId: respondingParticipant.id,
-            senderName: respondingParticipant.username, 
-            content: randomResponse,
-            type: "text",
-            timestamp: new Date().toISOString(),
-            status: "read", 
-          };
-          addMessage(chatId, responseMessage);
-        }, Math.random() * 1500 + 500); 
+        setTimeout(
+          () => {
+            const responseMessage: Message = {
+              id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 7)}-response`,
+              chatId,
+              senderId: respondingParticipant.id,
+              senderName: respondingParticipant.username,
+              content: randomResponse,
+              type: "text",
+              timestamp: new Date().toISOString(),
+              status: "read",
+            };
+            addMessage(chatId, responseMessage);
+          },
+          Math.random() * 1500 + 500,
+        );
       }
     }
 
-    
     if (socket && isConnected) {
       socket.emit("send_message", {
         chatId: newMessage.chatId,
@@ -182,7 +185,6 @@ export const useChat = (chatId?: string) => {
     }
   };
 
-  
   const sendTyping = () => {
     if (!socket || !isConnected || !chatId || !user) return;
 
@@ -191,8 +193,7 @@ export const useChat = (chatId?: string) => {
 
   return {
     currentChat: storedCurrentChat as Chat | null,
-    messages:
-      chatId && storedMessages[chatId] ? storedMessages[chatId] : [],
+    messages: chatId && storedMessages[chatId] ? storedMessages[chatId] : [],
     loading,
     error,
     typing,

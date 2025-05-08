@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { MessageSquare } from 'lucide-react';
+import { motion } from "framer-motion";
+import { MessageSquare } from "lucide-react";
 
 export default function ChatsPage() {
   return (

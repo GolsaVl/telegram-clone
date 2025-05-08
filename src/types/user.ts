@@ -4,7 +4,7 @@ export interface User {
   email: string;
   displayName: string;
   avatar?: string;
-  status: 'online' | 'offline' | 'away';
+  status: "online" | "offline" | "away";
   lastSeen?: string;
   bio?: string;
   createdAt: string;

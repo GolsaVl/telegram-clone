@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { Search, Archive, Inbox } from "lucide-react";
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 import { useChatStore } from "../../store/chat-store";
 import ChatListItem from "./chat-list-item";
 import { cn } from "../../lib/utils";
@@ -16,18 +16,14 @@ const ChatList = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [showArchived, setShowArchived] = useState(false);
-  
 
-  
   useEffect(() => {
     setLoading(true);
-    
-    
+
     setChats(hardcodedChats);
     setLoading(false);
   }, [setChats]);
 
-  
   useEffect(() => {
     if (!socket) return;
 
@@ -50,7 +46,6 @@ const ChatList = () => {
     };
   }, [socket, chats, setChats]);
 
-  
   const { activeChats, archivedChats } = useMemo(() => {
     const filtered = chats.filter(
       (chat) =>
@@ -68,13 +63,12 @@ const ChatList = () => {
 
   const chatsToDisplay = showArchived ? archivedChats : activeChats;
 
-  
   const listVariants = {
     visible: {
       opacity: 1,
       transition: {
         when: "beforeChildren",
-        staggerChildren: 0.05, 
+        staggerChildren: 0.05,
       },
     },
     hidden: {
@@ -86,9 +80,6 @@ const ChatList = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
     hidden: { opacity: 0, y: 20 },
   };
-
-  
-  
 
   return (
     <div className="flex flex-col h-full">
@@ -151,7 +142,7 @@ const ChatList = () => {
             variants={listVariants}
             initial="hidden"
             animate="visible"
-            className="overflow-hidden" 
+            className="overflow-hidden"
           >
             {chatsToDisplay.map((chat) => (
               <motion.div key={chat.id} variants={itemVariants}>

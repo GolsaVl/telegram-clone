@@ -7,7 +7,6 @@ import { cn } from "../../lib/utils";
 import { Chat } from "../../types/chat";
 import { useAuth } from "../../hooks/use-auth";
 
-
 dayjs.extend(relativeTime);
 
 interface ChatListItemProps {
@@ -24,7 +23,6 @@ const ChatListItem = memo(
       null,
     );
 
-    
     useEffect(() => {
       if (chat.type === "private" && user) {
         const otherUser = chat.participants.find((p) => p.id !== user.id);
@@ -34,25 +32,21 @@ const ChatListItem = memo(
       }
     }, [chat, user]);
 
-    
     const isLastMessageFromMe =
       chat.lastMessage && user && chat.lastMessage.senderId === user.id;
 
-    
     const formattedTime = chat.lastMessage?.timestamp
       ? dayjs(chat.lastMessage.timestamp).fromNow(true)
       : "";
 
-    
     const displayName =
       chat.type === "private" && recipient ? recipient.username : chat.name;
 
-    
     const recipientStatus = chat.type === "private" ? recipient?.status : null;
 
     const handleToggleArchive = (e: MouseEvent) => {
-      e.preventDefault(); 
-      e.stopPropagation(); 
+      e.preventDefault();
+      e.stopPropagation();
       onToggleArchive();
     };
 
@@ -73,7 +67,7 @@ const ChatListItem = memo(
     return (
       <div
         className={cn(
-          "group flex items-center justify-between p-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800", 
+          "group flex items-center justify-between p-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800",
           isActive &&
             "bg-primary-50 dark:bg-gray-800 hover:bg-primary-50 dark:hover:bg-gray-800",
         )}
@@ -97,15 +91,14 @@ const ChatListItem = memo(
             )}
 
             {/* Status indicator */}
-            {recipientStatus &&
-              recipientStatus !== "offline" && ( 
-                <span
-                  className={cn(
-                    "absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-white dark:border-gray-900",
-                    getStatusColor(recipientStatus),
-                  )}
-                />
-              )}
+            {recipientStatus && recipientStatus !== "offline" && (
+              <span
+                className={cn(
+                  "absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-white dark:border-gray-900",
+                  getStatusColor(recipientStatus),
+                )}
+              />
+            )}
           </div>
 
           {/* Content */}

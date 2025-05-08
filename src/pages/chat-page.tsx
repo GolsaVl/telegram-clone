@@ -1,23 +1,29 @@
 import { useParams } from "react-router-dom";
-import { memo, useEffect, useRef } from "react"; 
-import { motion, AnimatePresence } from "framer-motion"; 
+import { memo, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useChat } from "../hooks/use-chat";
 import { currentUserId } from "../data/hardcoded-data";
 import { Message } from "../types/chat";
-import { Paperclip, ImageIcon, FileText, Film, Mic, MapPin } from "lucide-react"; 
-import ChatHeader from "../components/chat/chat-header"; 
-
+import {
+  Paperclip,
+  ImageIcon,
+  FileText,
+  Film,
+  Mic,
+  MapPin,
+} from "lucide-react";
+import ChatHeader from "../components/chat/chat-header";
 
 const MessageContent = memo(({ message }: { message: Message }) => {
   switch (message.type) {
     case "image":
       return (
         <img
-          src={message.url || "https://via.placeholder.com/150"} 
+          src={message.url || "https://via.placeholder.com/150"}
           alt={message.content || "Image"}
           className="rounded-lg max-w-xs max-h-64 object-cover"
-          onLoad={(e) => (e.target as HTMLImageElement).style.opacity = '1'}
-          style={{ opacity: 0, transition: 'opacity 0.3s ease-in-out' }}
+          onLoad={(e) => ((e.target as HTMLImageElement).style.opacity = "1")}
+          style={{ opacity: 0, transition: "opacity 0.3s ease-in-out" }}
         />
       );
     case "video":
@@ -30,7 +36,7 @@ const MessageContent = memo(({ message }: { message: Message }) => {
         </div>
       );
     case "audio":
-       return (
+      return (
         <div className="my-1">
           <audio controls src={message.url} className="w-full max-w-xs">
             Your browser does not support the audio element.
@@ -48,8 +54,14 @@ const MessageContent = memo(({ message }: { message: Message }) => {
         >
           <FileText size={24} className="text-gray-600 dark:text-gray-400" />
           <div>
-            <p className="font-medium text-sm">{message.fileName || message.content || "Attachment"}</p>
-            {message.fileSize && <p className="text-xs text-gray-500 dark:text-gray-400">{message.fileSize}</p>}
+            <p className="font-medium text-sm">
+              {message.fileName || message.content || "Attachment"}
+            </p>
+            {message.fileSize && (
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                {message.fileSize}
+              </p>
+            )}
           </div>
         </a>
       );
@@ -68,10 +80,10 @@ const MessageContent = memo(({ message }: { message: Message }) => {
             </span>
           </div>
           <img
-            src={`https://static-maps.yandex.ru/1.x/?ll=${message.longitude},${message.latitude}&z=16&l=map&size=280,150&pt=${message.longitude},${message.latitude},pm2rdl`} 
+            src={`https://static-maps.yandex.ru/1.x/?ll=${message.longitude},${message.latitude}&z=16&l=map&size=280,150&pt=${message.longitude},${message.latitude},pm2rdl`}
             alt="Map preview"
             className="rounded max-w-[280px] h-[150px] object-cover border dark:border-gray-600"
-            onError={(e) => (e.currentTarget.style.display = 'none')} 
+            onError={(e) => (e.currentTarget.style.display = "none")}
           />
           <span className="text-xs text-gray-500 dark:text-gray-400 hover:underline">
             View on OpenStreetMap
@@ -89,7 +101,6 @@ export default function ChatPage() {
   const { currentChat, messages, sendMessage } = useChat(chatId);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -105,7 +116,9 @@ export default function ChatPage() {
   return (
     <div className="flex flex-col h-full bg-gray-50 dark:bg-gray-950">
       <ChatHeader chat={currentChat} />
-      <div className="flex-1 overflow-y-auto p-4"> {/* Removed space-y-4 for AnimatePresence direct children */}
+      <div className="flex-1 overflow-y-auto p-4">
+        {" "}
+        {/* Removed space-y-4 for AnimatePresence direct children */}
         <AnimatePresence initial={false}>
           {messages.map((message, index) => (
             <motion.div
@@ -114,39 +127,41 @@ export default function ChatPage() {
               initial={{ opacity: 0, y: 20, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, transition: { duration: 0.15 } }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 260, 
+              transition={{
+                type: "spring",
+                stiffness: 260,
                 damping: 20,
-                delay: index * 0.02 
+                delay: index * 0.02,
               }}
-              className={`flex mb-4 ${ 
-              message.senderId === currentUserId
-                ? "justify-end"
-                : "justify-start"
-            }`}
-          >
-            <div
-              className={`max-w-[70%] rounded-lg p-3 shadow-md ${ 
+              className={`flex mb-4 ${
                 message.senderId === currentUserId
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-100 dark:bg-gray-800"
-              } ${message.type !== 'text' ? (message.senderId === currentUserId ? '!bg-blue-500' : '!bg-gray-200 dark:!bg-gray-700') : ''}`}
+                  ? "justify-end"
+                  : "justify-start"
+              }`}
             >
-              <MessageContent message={message} />
-            </div>
-          </motion.div>
-        ))}
-      </AnimatePresence>
-      <div ref={messagesEndRef} /> {/* For auto-scrolling */}
-    </div>
+              <div
+                className={`max-w-[70%] rounded-lg p-3 shadow-md ${
+                  message.senderId === currentUserId
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100 dark:bg-gray-800"
+                } ${message.type !== "text" ? (message.senderId === currentUserId ? "!bg-blue-500" : "!bg-gray-200 dark:!bg-gray-700") : ""}`}
+              >
+                <MessageContent message={message} />
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+        <div ref={messagesEndRef} /> {/* For auto-scrolling */}
+      </div>
 
-    <div className="border-t p-4 bg-white dark:bg-gray-900">
+      <div className="border-t p-4 bg-white dark:bg-gray-900">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             const form = e.target as HTMLFormElement;
-            const inputElement = form.elements.namedItem("message") as HTMLInputElement;
+            const inputElement = form.elements.namedItem(
+              "message",
+            ) as HTMLInputElement;
             const messageText = inputElement.value.trim();
 
             if (messageText) {
@@ -159,7 +174,15 @@ export default function ChatPage() {
           {/* Media Buttons - for demonstration */}
           <button
             type="button"
-            onClick={() => sendMessage("Look at this cool image!", "image", "https://picsum.photos/seed/風景/300/200", "landscape.jpg", "150 KB")}
+            onClick={() =>
+              sendMessage(
+                "Look at this cool image!",
+                "image",
+                "https://picsum.photos/seed/風景/300/200",
+                "landscape.jpg",
+                "150 KB",
+              )
+            }
             className="p-2 text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400"
             title="Send Image"
           >
@@ -167,23 +190,47 @@ export default function ChatPage() {
           </button>
           <button
             type="button"
-            onClick={() => sendMessage("Check out this document.", "file", "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", "report.pdf", "2 MB")}
+            onClick={() =>
+              sendMessage(
+                "Check out this document.",
+                "file",
+                "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                "report.pdf",
+                "2 MB",
+              )
+            }
             className="p-2 text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400"
             title="Send File"
           >
             <Paperclip size={20} />
           </button>
-           <button
+          <button
             type="button"
-            onClick={() => sendMessage("Important video.", "video", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "bunny.mp4", "10 MB")}
+            onClick={() =>
+              sendMessage(
+                "Important video.",
+                "video",
+                "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                "bunny.mp4",
+                "10 MB",
+              )
+            }
             className="p-2 text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400"
             title="Send Video"
           >
             <Film size={20} />
           </button>
-           <button
+          <button
             type="button"
-            onClick={() => sendMessage("Listen to this.", "audio", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", "song.mp3", "4 MB")}
+            onClick={() =>
+              sendMessage(
+                "Listen to this.",
+                "audio",
+                "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                "song.mp3",
+                "4 MB",
+              )
+            }
             className="p-2 text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400"
             title="Send Audio"
           >
@@ -191,7 +238,17 @@ export default function ChatPage() {
           </button>
           <button
             type="button"
-            onClick={() => sendMessage("Our meeting spot", "location", undefined, undefined, undefined, 34.0522, -118.2437)} 
+            onClick={() =>
+              sendMessage(
+                "Our meeting spot",
+                "location",
+                undefined,
+                undefined,
+                undefined,
+                34.0522,
+                -118.2437,
+              )
+            }
             className="p-2 text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400"
             title="Send Location"
           >

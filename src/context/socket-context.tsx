@@ -1,6 +1,12 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { io, Socket } from 'socket.io-client';
-import { useAuth } from '../hooks/use-auth';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+import { io, Socket } from "socket.io-client";
+import { useAuth } from "../hooks/use-auth";
 
 interface SocketContextType {
   socket: Socket | null;
@@ -15,7 +21,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
-    
     if (!isAuthenticated || !user) {
       if (socket) {
         socket.disconnect();
@@ -25,34 +30,30 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    
-    const token = localStorage.getItem('token');
-    const newSocket = io('/', {
+    const token = localStorage.getItem("token");
+    const newSocket = io("/", {
       auth: { token },
-      transports: ['websocket'],
+      transports: ["websocket"],
       autoConnect: true,
     });
 
-    
-    newSocket.on('connect', () => {
-      console.log('Socket connected');
+    newSocket.on("connect", () => {
+      console.log("Socket connected");
       setIsConnected(true);
     });
 
-    newSocket.on('disconnect', () => {
-      console.log('Socket disconnected');
+    newSocket.on("disconnect", () => {
+      console.log("Socket disconnected");
       setIsConnected(false);
     });
 
-    newSocket.on('connect_error', (error) => {
-      console.error('Socket connection error:', error);
+    newSocket.on("connect_error", (error) => {
+      console.error("Socket connection error:", error);
       setIsConnected(false);
     });
 
-    
     setSocket(newSocket);
 
-    
     return () => {
       if (newSocket) {
         newSocket.disconnect();
@@ -69,10 +70,10 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
 export const useSocket = () => {
   const context = useContext(SocketContext);
-  
+
   if (context === undefined) {
-    throw new Error('useSocket must be used within a SocketProvider');
+    throw new Error("useSocket must be used within a SocketProvider");
   }
-  
+
   return context;
 };

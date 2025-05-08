@@ -1,6 +1,6 @@
-import { Outlet } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { MessageCircle } from 'lucide-react';
+import { Outlet } from "react-router-dom";
+import { motion } from "framer-motion";
+import { MessageCircle } from "lucide-react";
 
 const AuthLayout = () => {
   return (
