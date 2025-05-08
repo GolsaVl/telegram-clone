@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Chat } from '../../types/chat';
 import { User } from '../../types/user';
 import { cn } from '../../lib/utils';
-import { useAuth } from '../../hooks/use-auth'; // To identify the current user
+import { useAuth } from '../../hooks/use-auth'; 
 
 interface ChatHeaderProps {
   chat: Chat | null;
 }
 
-// Helper to get status display properties (similar to ProfilePage)
+
 const getStatusDisplay = (status: User['status'] | undefined) => {
   switch (status) {
     case 'online':

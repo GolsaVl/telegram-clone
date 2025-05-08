@@ -1,18 +1,19 @@
 import { useParams } from "react-router-dom";
-import { memo } from "react"; // Import memo
+import { memo, useEffect, useRef } from "react"; 
+import { motion, AnimatePresence } from "framer-motion"; 
 import { useChat } from "../hooks/use-chat";
 import { currentUserId } from "../data/hardcoded-data";
 import { Message } from "../types/chat";
-import { Paperclip, ImageIcon, FileText, Film, Mic, MapPin } from "lucide-react"; // Added icons
-import ChatHeader from "../components/chat/chat-header"; // Import ChatHeader
+import { Paperclip, ImageIcon, FileText, Film, Mic, MapPin } from "lucide-react"; 
+import ChatHeader from "../components/chat/chat-header"; 
 
-// Helper component to render message content based on type
+
 const MessageContent = memo(({ message }: { message: Message }) => {
   switch (message.type) {
     case "image":
       return (
         <img
-          src={message.url || "https://via.placeholder.com/150"} // Fallback placeholder
+          src={message.url || "https://via.placeholder.com/150"} 
           alt={message.content || "Image"}
           className="rounded-lg max-w-xs max-h-64 object-cover"
           onLoad={(e) => (e.target as HTMLImageElement).style.opacity = '1'}
@@ -67,10 +68,10 @@ const MessageContent = memo(({ message }: { message: Message }) => {
             </span>
           </div>
           <img
-            src={`https://static-maps.yandex.ru/1.x/?ll=${message.longitude},${message.latitude}&z=16&l=map&size=280,150&pt=${message.longitude},${message.latitude},pm2rdl`} // Using Yandex Static Maps as an example for a quick map preview
+            src={`https://static-maps.yandex.ru/1.x/?ll=${message.longitude},${message.latitude}&z=16&l=map&size=280,150&pt=${message.longitude},${message.latitude},pm2rdl`} 
             alt="Map preview"
             className="rounded max-w-[280px] h-[150px] object-cover border dark:border-gray-600"
-            onError={(e) => (e.currentTarget.style.display = 'none')} // Hide if map image fails to load
+            onError={(e) => (e.currentTarget.style.display = 'none')} 
           />
           <span className="text-xs text-gray-500 dark:text-gray-400 hover:underline">
             View on OpenStreetMap
@@ -86,6 +87,12 @@ const MessageContent = memo(({ message }: { message: Message }) => {
 export default function ChatPage() {
   const { chatId } = useParams();
   const { currentChat, messages, sendMessage } = useChat(chatId);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   if (!currentChat) {
     return (
@@ -98,18 +105,29 @@ export default function ChatPage() {
   return (
     <div className="flex flex-col h-full bg-gray-50 dark:bg-gray-950">
       <ChatHeader chat={currentChat} />
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex ${
+      <div className="flex-1 overflow-y-auto p-4"> {/* Removed space-y-4 for AnimatePresence direct children */}
+        <AnimatePresence initial={false}>
+          {messages.map((message, index) => (
+            <motion.div
+              key={message.id}
+              layout
+              initial={{ opacity: 0, y: 20, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.15 } }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 260, 
+                damping: 20,
+                delay: index * 0.02 
+              }}
+              className={`flex mb-4 ${ 
               message.senderId === currentUserId
                 ? "justify-end"
                 : "justify-start"
             }`}
           >
             <div
-              className={`max-w-[70%] rounded-lg p-3 ${
+              className={`max-w-[70%] rounded-lg p-3 shadow-md ${ 
                 message.senderId === currentUserId
                   ? "bg-blue-500 text-white"
                   : "bg-gray-100 dark:bg-gray-800"
@@ -117,11 +135,13 @@ export default function ChatPage() {
             >
               <MessageContent message={message} />
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </AnimatePresence>
+      <div ref={messagesEndRef} /> {/* For auto-scrolling */}
+    </div>
 
-      <div className="border-t p-4 bg-white dark:bg-gray-900">
+    <div className="border-t p-4 bg-white dark:bg-gray-900">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -171,7 +191,7 @@ export default function ChatPage() {
           </button>
           <button
             type="button"
-            onClick={() => sendMessage("Our meeting spot", "location", undefined, undefined, undefined, 34.0522, -118.2437)} // Example: Los Angeles
+            onClick={() => sendMessage("Our meeting spot", "location", undefined, undefined, undefined, 34.0522, -118.2437)} 
             className="p-2 text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400"
             title="Send Location"
           >

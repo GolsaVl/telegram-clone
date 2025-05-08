@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 /**
  * Combines multiple class names using clsx and tailwind-merge
@@ -18,17 +18,18 @@ export function cn(...inputs: ClassValue[]) {
 export function formatDate(dateString: string, includeTime = false) {
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = {
-    month: 'short',
-    day: 'numeric',
-    year: date.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined,
+    month: "short",
+    day: "numeric",
+    year:
+      date.getFullYear() !== new Date().getFullYear() ? "numeric" : undefined,
   };
-  
+
   if (includeTime) {
-    options.hour = '2-digit';
-    options.minute = '2-digit';
+    options.hour = "2-digit";
+    options.minute = "2-digit";
   }
-  
-  return new Intl.DateTimeFormat('en-US', options).format(date);
+
+  return new Intl.DateTimeFormat("en-US", options).format(date);
 }
 
 /**
@@ -49,9 +50,9 @@ export function truncateString(str: string, maxLength = 30) {
  */
 export function getInitials(name: string) {
   return name
-    .split(' ')
-    .map(part => part.charAt(0))
-    .join('')
+    .split(" ")
+    .map((part) => part.charAt(0))
+    .join("")
     .toUpperCase()
     .slice(0, 2);
 }
@@ -62,13 +63,14 @@ export function getInitials(name: string) {
  * @param wait - Wait time in ms
  * @returns Debounced function
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
-  wait = 300
+  wait = 300,
 ) {
   let timeout: ReturnType<typeof setTimeout>;
-  
-  return function(...args: Parameters<T>) {
+
+  return function (...args: Parameters<T>) {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
   };

@@ -7,7 +7,7 @@ import { cn } from "../../lib/utils";
 import { Chat } from "../../types/chat";
 import { useAuth } from "../../hooks/use-auth";
 
-// Enable relative time for readable timestamps
+
 dayjs.extend(relativeTime);
 
 interface ChatListItemProps {
@@ -24,7 +24,7 @@ const ChatListItem = memo(
       null,
     );
 
-    // For private chats, find the other participant (not the current user)
+    
     useEffect(() => {
       if (chat.type === "private" && user) {
         const otherUser = chat.participants.find((p) => p.id !== user.id);
@@ -34,25 +34,25 @@ const ChatListItem = memo(
       }
     }, [chat, user]);
 
-    // Determine if the last message was sent by the current user
+    
     const isLastMessageFromMe =
       chat.lastMessage && user && chat.lastMessage.senderId === user.id;
 
-    // Format timestamp in a readable way
+    
     const formattedTime = chat.lastMessage?.timestamp
       ? dayjs(chat.lastMessage.timestamp).fromNow(true)
       : "";
 
-    // Get display name for the chat (group name or recipient's name)
+    
     const displayName =
       chat.type === "private" && recipient ? recipient.username : chat.name;
 
-    // Get online status for private chats
+    
     const recipientStatus = chat.type === "private" ? recipient?.status : null;
 
     const handleToggleArchive = (e: MouseEvent) => {
-      e.preventDefault(); // Prevent link navigation if any part of the button is within a Link
-      e.stopPropagation(); // Stop event from bubbling up
+      e.preventDefault(); 
+      e.stopPropagation(); 
       onToggleArchive();
     };
 
@@ -73,7 +73,7 @@ const ChatListItem = memo(
     return (
       <div
         className={cn(
-          "group flex items-center justify-between p-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800", // Added group for button visibility
+          "group flex items-center justify-between p-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800", 
           isActive &&
             "bg-primary-50 dark:bg-gray-800 hover:bg-primary-50 dark:hover:bg-gray-800",
         )}
@@ -98,7 +98,7 @@ const ChatListItem = memo(
 
             {/* Status indicator */}
             {recipientStatus &&
-              recipientStatus !== "offline" && ( // Show for online and away, or adjust if offline dot is desired
+              recipientStatus !== "offline" && ( 
                 <span
                   className={cn(
                     "absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-white dark:border-gray-900",
