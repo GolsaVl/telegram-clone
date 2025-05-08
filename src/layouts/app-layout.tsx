@@ -9,13 +9,11 @@ const AppLayout = () => {
   const isChatRoute = location.pathname.startsWith("/chats/");
 
   return (
-    <div className="flex h-full overflow-hidden">
+    <div className="flex h-full overflow-hidden bg-[var(--background)] bg-gradient-to-br from-[var(--background)] via-[hsl(var(--primary-hsl)_/_0.03)] to-[var(--background)] dark:from-[var(--background)] dark:via-[hsl(var(--primary-hsl)_/_0.05)] dark:to-[var(--background)]">
       <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        className={`hidden md:flex md:w-72 md:flex-col lg:w-80 border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 ${
+        className={`glass-effect hidden md:flex md:w-72 md:flex-col lg:w-80 ${
           isChatRoute ? "md:block" : "md:block"
-        }`}
+        } border-r border-[var(--border-glass-light)] dark:border-[var(--border-glass-dark)]`}
       >
         <Sidebar />
       </motion.div>

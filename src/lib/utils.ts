@@ -63,7 +63,7 @@ export function getInitials(name: string) {
  * @param wait - Wait time in ms
  * @returns Debounced function
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait = 300,

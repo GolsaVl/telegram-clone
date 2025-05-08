@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/use-auth";
-import { UserPlus, ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -36,99 +36,93 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
-          <div className="flex justify-center">
-            <UserPlus className="h-12 w-12 text-primary" />
+    <div className="w-full space-y-6">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold tracking-tight text-[var(--foreground)] sm:text-3xl">
+          Create your account
+        </h2>
+        <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="font-medium text-[var(--primary)] hover:text-[hsl(var(--primary-hsl)_/_0.8)] focus:outline-none focus:underline"
+          >
+            Sign in
+          </Link>
+        </p>
+      </div>
+
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        {error && (
+          <div className="p-3 text-sm text-[var(--destructive-foreground)] bg-[var(--destructive)] rounded-[var(--radius-md)]">
+            {error}
           </div>
-          <h2 className="mt-6 text-3xl font-bold tracking-tight">
-            Create your account
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="font-medium text-primary hover:text-primary/90"
-            >
-              Sign in
-            </Link>
-          </p>
+        )}
+
+        <div className="space-y-4">
+          {" "}
+          <div>
+            <label htmlFor="email" className="sr-only">
+              Email address
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              className="input w-full py-2.5"
+              placeholder="Email address"
+            />
+          </div>
+          <div>
+            <label htmlFor="password" className="sr-only">
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              required
+              className="input w-full py-2.5"
+              placeholder="Password"
+            />
+          </div>
+          <div>
+            <label htmlFor="confirmPassword" className="sr-only">
+              Confirm Password
+            </label>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              autoComplete="new-password"
+              required
+              className="input w-full py-2.5"
+              placeholder="Confirm Password"
+            />
+          </div>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="p-4 text-sm text-red-800 bg-red-50 rounded-lg">
-              {error}
-            </div>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="btn btn-primary w-full flex justify-center items-center gap-2 py-2.5 text-sm"
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin text-[var(--primary-foreground)]" />
+              Creating account...
+            </>
+          ) : (
+            <>
+              Create account
+              <ArrowRight className="h-5 w-5" />
+            </>
           )}
-
-          <div className="space-y-4 rounded-md">
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="relative block w-full rounded-lg border-0 py-3 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-primary sm:text-sm sm:leading-6"
-                placeholder="Email address"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="relative block w-full rounded-lg border-0 py-3 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-primary sm:text-sm sm:leading-6"
-                placeholder="Password"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="confirmPassword" className="sr-only">
-                Confirm Password
-              </label>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="relative block w-full rounded-lg border-0 py-3 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-primary sm:text-sm sm:leading-6"
-                placeholder="Confirm Password"
-              />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="flex w-full justify-center items-center gap-2 rounded-lg bg-primary px-4 py-3 font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                Creating account...
-              </>
-            ) : (
-              <>
-                Create account
-                <ArrowRight className="h-5 w-5" />
-              </>
-            )}
-          </button>
-        </form>
-      </div>
+        </button>
+      </form>
     </div>
   );
 }

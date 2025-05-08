@@ -99,16 +99,16 @@ const Sidebar = () => {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex h-16 items-center justify-between px-4 border-b border-gray-200 dark:border-gray-800">
+      <div className="flex h-16 items-center justify-between px-4 border-b border-[var(--border)]">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="flex items-center gap-2"
         >
-          <div className="bg-primary-600 text-white p-2 rounded-lg">
+          <div className="bg-[var(--primary)] text-[var(--primary-foreground)] p-2 rounded-lg">
             <MessageCircle size={20} />
           </div>
-          <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <h1 className="text-lg font-semibold text-[var(--foreground)]">
             Messengerr
           </h1>
         </motion.div>
@@ -116,10 +116,10 @@ const Sidebar = () => {
       </div>
 
       <div className="flex flex-1 flex-col overflow-hidden relative">
-        <div className="p-4 border-b border-gray-200 dark:border-gray-800">
+        <div className="p-4 border-b border-[var(--border)]">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <Search size={16} className="text-gray-400" />
+              <Search size={16} className="text-[var(--muted-foreground)]" />
             </div>
             <input
               type="text"
@@ -197,24 +197,24 @@ const Sidebar = () => {
 
         <div className="flex-1 overflow-y-auto no-scrollbar">
           {!isUserSearchFocused && (
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 px-4 pt-4 pb-2">
+            <h2 className="text-xs font-semibold uppercase tracking-wider text-[var(--muted-foreground)] px-4 pt-4 pb-2">
               Recent Chats
             </h2>
           )}
           <ChatList />
         </div>
 
-        <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+        <div className="p-4 border-t border-[var(--border)]">
           <nav className="flex flex-col space-y-1">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
                 className={cn(
-                  "flex items-center rounded-md px-3 py-2 text-sm font-medium",
+                  "flex items-center rounded-[var(--radius-sm)] px-3 py-2 text-sm font-medium transition-colors",
                   getIsActive(item.path)
-                    ? "bg-primary-50 text-primary-700 dark:bg-gray-800 dark:text-primary-400"
-                    : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800",
+                    ? "bg-[hsl(var(--primary-hsl)_/_0.1)] text-[var(--primary)] dark:bg-[hsl(var(--primary-hsl)_/_0.2)]"
+                    : "text-[var(--muted-foreground)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]",
                 )}
               >
                 <item.icon size={18} className="mr-3 flex-shrink-0" />
@@ -223,7 +223,7 @@ const Sidebar = () => {
             ))}
             <button
               onClick={logout}
-              className="flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="flex items-center rounded-[var(--radius-sm)] px-3 py-2 text-sm font-medium text-[var(--muted-foreground)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)] transition-colors"
             >
               <LogOut size={18} className="mr-3 flex-shrink-0" />
               <span>Logout</span>

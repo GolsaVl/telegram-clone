@@ -32,13 +32,14 @@ export default function LoginPage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="w-full max-w-md p-8 space-y-8"
+      transition={{ duration: 0.3 }}
+      className="w-full space-y-6"
     >
       <div className="text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h2 className="text-2xl font-bold tracking-tight text-[var(--foreground)] sm:text-3xl">
           Welcome back
         </h2>
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+        <p className="mt-1 text-sm text-[var(--muted-foreground)]">
           Sign in to your account to continue
         </p>
       </div>
@@ -47,13 +48,13 @@ export default function LoginPage() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            className="block text-sm font-medium text-[var(--foreground)]"
           >
             Email address
           </label>
           <div className="mt-1 relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Mail className="h-5 w-5 text-gray-400" />
+              <Mail className="h-5 w-5 text-[var(--muted-foreground)]" />
             </div>
             <input
               id="email"
@@ -63,8 +64,8 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              placeholder="Enter your email"
+              className="input block w-full pl-10 pr-3 py-2 sm:text-sm"
+              placeholder="you@example.com"
             />
           </div>
         </div>
@@ -72,13 +73,13 @@ export default function LoginPage() {
         <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            className="block text-sm font-medium text-[var(--foreground)]"
           >
             Password
           </label>
           <div className="mt-1 relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Lock className="h-5 w-5 text-gray-400" />
+              <Lock className="h-5 w-5 text-[var(--muted-foreground)]" />
             </div>
             <input
               id="password"
@@ -88,23 +89,21 @@ export default function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              placeholder="Enter your password"
+              className="input block w-full pl-10 pr-3 py-2 sm:text-sm"
+              placeholder="••••••••"
             />
           </div>
         </div>
 
-        {error && (
-          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-        )}
+        {error && <p className="text-sm text-[var(--destructive)]"> {error}</p>}
 
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn btn-primary w-full flex justify-center items-center py-2.5 px-4 text-sm"
         >
           {isLoading ? (
-            <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-[var(--primary-foreground)] border-t-transparent rounded-full animate-spin" />
           ) : (
             <>
               Sign in
@@ -114,11 +113,11 @@ export default function LoginPage() {
         </button>
       </form>
 
-      <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+      <p className="text-center text-sm text-[var(--muted-foreground)]">
         Don't have an account?{" "}
         <button
           onClick={() => navigate("/register")}
-          className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+          className="font-medium text-[var(--primary)] hover:text-[hsl(var(--primary-hsl)_/_0.8)] focus:outline-none focus:underline"
         >
           Sign up
         </button>

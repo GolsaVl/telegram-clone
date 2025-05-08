@@ -4,11 +4,71 @@
 
 @layer base {
   :root {
-    font-family:
-      "Inter",
-      system-ui,
-      -apple-system,
-      sans-serif;
+    --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+    --background-hsl: 0 0% 100%;
+    --foreground-hsl: 240 10% 3.9%;
+
+    --muted-hsl: 240 4.8% 95.9%;
+    --muted-foreground-hsl: 240 3.8% 46.1%;
+
+    --popover-hsl: 0 0% 100%;
+    --popover-foreground-hsl: 240 10% 3.9%;
+
+    --card-hsl: 0 0% 100%;
+    --card-foreground-hsl: 240 10% 3.9%;
+
+    --border-hsl: 240 5.9% 90%;
+    --input-hsl: 240 5.9% 83.5%;
+
+    --primary-hsl: 262.1 83.3% 57.8%;
+    --primary-foreground-hsl: 0 0% 100%;
+
+    --secondary-hsl: 240 4.8% 95.9%;
+    --secondary-foreground-hsl: 240 5.9% 10%;
+
+    --accent-hsl: 240 4.8% 95.9%;
+    --accent-foreground-hsl: 240 5.9% 10%;
+
+    --destructive-hsl: 0 84.2% 60.2%;
+    --destructive-foreground-hsl: 0 0% 100%;
+
+    --success-hsl: 142.1 70.6% 45.3%;
+    --success-foreground-hsl: 0 0% 100%;
+
+    --ring-hsl: 262.1 83.3% 57.8%;
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+
+    --bg-glass-light: rgba(255, 255, 255, 0.6);
+    --border-glass-light: rgba(209, 213, 219, 0.3);
+    --shadow-color-light: 220 3% 15%;
+
+    --background: hsl(var(--background-hsl));
+    --foreground: hsl(var(--foreground-hsl));
+    --muted: hsl(var(--muted-hsl));
+    --muted-foreground: hsl(var(--muted-foreground-hsl));
+    --popover: hsl(var(--popover-hsl));
+    --popover-foreground: hsl(var(--popover-foreground-hsl));
+    --card: hsl(var(--card-hsl));
+    --card-foreground: hsl(var(--card-foreground-hsl));
+    --border: hsl(var(--border-hsl));
+    --input: hsl(var(--input-hsl));
+    --primary: hsl(var(--primary-hsl));
+    --primary-foreground: hsl(var(--primary-foreground-hsl));
+    --secondary: hsl(var(--secondary-hsl));
+    --secondary-foreground: hsl(var(--secondary-foreground-hsl));
+    --accent: hsl(var(--accent-hsl));
+    --accent-foreground: hsl(var(--accent-foreground-hsl));
+    --destructive: hsl(var(--destructive-hsl));
+    --destructive-foreground: hsl(var(--destructive-foreground-hsl));
+    --success: hsl(var(--success-hsl));
+    --success-foreground: hsl(var(--success-foreground-hsl));
+    --ring: hsl(var(--ring-hsl));
+
+    font-family: var(--font-sans);
     line-height: 1.5;
     font-weight: 400;
     font-synthesis: none;
@@ -17,87 +77,154 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  html.dark {
+    --background-hsl: 240 10% 3.9%;
+    --foreground-hsl: 0 0% 98%;
+
+    --muted-hsl: 240 3.7% 15.9%;
+    --muted-foreground-hsl: 240 5% 64.9%;
+
+    --popover-hsl: 240 10% 3.9%;
+    --popover-foreground-hsl: 0 0% 98%;
+
+    --card-hsl: 240 10% 3.9%;
+    --card-foreground-hsl: 0 0% 98%;
+
+    --border-hsl: 240 3.7% 15.9%;
+    --input-hsl: 240 3.7% 25.9%;
+
+    --secondary-hsl: 240 3.7% 15.9%;
+    --secondary-foreground-hsl: 0 0% 98%;
+
+    --accent-hsl: 240 3.7% 15.9%;
+    --accent-foreground-hsl: 0 0% 98%;
+
+    --bg-glass-dark: rgba(30, 41, 59, 0.6);
+    --border-glass-dark: rgba(71, 85, 105, 0.3);
+    --shadow-color-dark: 220 3% 5%;
+  }
+
   html {
     @apply h-full antialiased;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply h-full bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100;
+    @apply h-full min-h-screen;
+    background-color: var(--background);
+    color: var(--foreground);
+    transition-property: background-color, color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
   }
 
   #root {
     @apply h-full;
   }
 
-  /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
 
-  /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors
-      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none 
-      disabled:opacity-50;
+    @apply inline-flex items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium transition-all
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]
+      disabled:pointer-events-none disabled:opacity-50;
   }
 
   .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700 focus-visible:ring-primary-500 dark:bg-primary-700 
-      dark:hover:bg-primary-600 dark:focus-visible:ring-primary-500;
+    @apply bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90
+      focus-visible:ring-[var(--primary)];
   }
 
   .btn-secondary {
-    @apply bg-secondary-600 text-white hover:bg-secondary-700 focus-visible:ring-secondary-500 dark:bg-secondary-700 
-      dark:hover:bg-secondary-600 dark:focus-visible:ring-secondary-500;
+    @apply bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-opacity-80
+      focus-visible:ring-[var(--secondary)];
+  }
+
+  .btn-destructive {
+    @apply bg-[var(--destructive)] text-[var(--destructive-foreground)] hover:opacity-90
+      focus-visible:ring-[var(--destructive)];
   }
 
   .btn-ghost {
-    @apply bg-transparent text-gray-900 hover:bg-gray-100 focus-visible:ring-gray-500 dark:text-gray-100 
-      dark:hover:bg-gray-800 dark:focus-visible:ring-gray-500;
+    @apply bg-transparent text-[var(--foreground)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]
+      focus-visible:ring-[var(--ring)];
   }
 
   .btn-outline {
-    @apply border border-gray-300 bg-transparent text-gray-900 hover:bg-gray-100 focus-visible:ring-gray-500 
-      dark:border-gray-700 dark:text-gray-100 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-500;
+    @apply border border-[var(--input)] bg-transparent text-[var(--foreground)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]
+      focus-visible:ring-[var(--ring)];
+  }
+
+  .btn-link {
+    @apply text-[var(--primary)] underline-offset-4 hover:underline;
   }
 
   .input {
-    @apply rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm 
-      transition-colors focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 
-      dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-primary-500 
-      dark:focus:ring-primary-500;
+    @apply rounded-[var(--radius-md)] border border-[var(--input)] bg-[var(--background)] px-3 py-2 text-sm shadow-sm
+      text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]
+      transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium
+      focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-1 focus:ring-offset-[var(--background)];
   }
 
   .avatar {
-    @apply flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-200 text-sm 
-      font-medium uppercase text-gray-700 dark:bg-gray-800 dark:text-gray-300;
+    @apply flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[var(--muted)] text-sm
+      font-medium uppercase text-[var(--muted-foreground)];
   }
 
   .badge {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+    @apply inline-flex items-center rounded-full border border-transparent px-2.5 py-0.5 text-xs font-semibold transition-colors
+      focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-2;
   }
 
   .badge-primary {
-    @apply bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-300;
+    @apply border-transparent bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-opacity-80;
   }
 
   .badge-secondary {
-    @apply bg-secondary-100 text-secondary-800 dark:bg-secondary-900 dark:text-secondary-300;
+    @apply border-transparent bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-opacity-80;
   }
 
   .badge-accent {
-    @apply bg-accent-100 text-accent-800 dark:bg-accent-900 dark:text-accent-300;
+    @apply border-transparent bg-[var(--accent)] text-[var(--accent-foreground)] hover:bg-opacity-80;
+  }
+
+  .badge-destructive {
+    @apply border-transparent bg-[var(--destructive)] text-[var(--destructive-foreground)] hover:bg-opacity-80;
+  }
+
+  .badge-outline {
+    @apply text-[var(--foreground)] border-[var(--border)];
   }
 
   .toast {
-    @apply pointer-events-auto flex w-full items-center justify-between space-x-4 rounded-md border border-gray-200 
-      bg-white p-6 shadow-lg dark:border-gray-800 dark:bg-gray-950;
+    @apply pointer-events-auto flex w-full items-center justify-between space-x-4 rounded-[var(--radius-lg)] border border-[var(--border)]
+      bg-[var(--popover)] p-6 shadow-lg text-[var(--popover-foreground)];
+  }
+
+  .glass-effect {
+    background-color: var(--bg-glass-light);
+    border: 1px solid var(--border-glass-light);
+    box-shadow: var(--shadow-glass);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    @apply rounded-[var(--radius-lg)];
+  }
+  html.dark .glass-effect {
+    background-color: var(--bg-glass-dark);
+    border: 1px solid var(--border-glass-dark);
+    box-shadow: var(--shadow-glass-dark);
+  }
+
+  .card-modern {
+    @apply bg-[var(--card)] text-[var(--card-foreground)] rounded-[var(--radius-lg)] border border-[var(--border)] shadow-md;
   }
 }
