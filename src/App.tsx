@@ -24,13 +24,7 @@ function App() {
 
   return (
     <AnimatePresence mode="wait" initial={false}>
-      {/* 
-        Keying Routes with location.pathname and passing location allows AnimatePresence
-        to correctly track route changes for page transitions.
-        Suspense is now moved to wrap the individual lazy-loaded page components.
-      */}
       <Routes location={location} key={location.pathname}>
-        {/* Public routes */}
         <Route element={<AuthLayout />}>
           <Route
             path="/login"
@@ -58,7 +52,6 @@ function App() {
           />
         </Route>
 
-        {/* Protected routes */}
         <Route
           element={
             isAuthenticated ? <AppLayout /> : <Navigate to="/login" replace />
@@ -99,7 +92,6 @@ function App() {
           />
         </Route>
 
-        {/* 404 page */}
         <Route
           path="*"
           element={

@@ -76,7 +76,6 @@ const ChatListItem = memo(
           to={`/chats/${chat.id}`}
           className="flex items-center min-w-0 flex-1"
         >
-          {/* Avatar */}
           <div className="relative mr-3">
             {chat.avatar ? (
               <img
@@ -90,7 +89,6 @@ const ChatListItem = memo(
               </div>
             )}
 
-            {/* Status indicator */}
             {recipientStatus && recipientStatus !== "offline" && (
               <span
                 className={cn(
@@ -101,7 +99,6 @@ const ChatListItem = memo(
             )}
           </div>
 
-          {/* Content */}
           <div className="min-w-0 flex-1">
             <div className="flex justify-between items-baseline">
               <h3
@@ -122,7 +119,6 @@ const ChatListItem = memo(
             </div>
 
             <div className="flex items-center justify-between">
-              {/* Last message */}
               <p
                 className={cn(
                   "truncate text-xs",
@@ -143,7 +139,6 @@ const ChatListItem = memo(
                 {chat.lastMessage?.content || "No messages yet"}
               </p>
 
-              {/* Unread badge */}
               {chat.unreadCount > 0 && !isLastMessageFromMe && (
                 <span className="ml-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary-600 text-xs font-medium text-white">
                   {chat.unreadCount > 9 ? "9+" : chat.unreadCount}

@@ -27,7 +27,6 @@ export default function SettingsPage() {
           </h1>
 
           <div className="space-y-6">
-            {/* Appearance */}
             <section>
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Appearance
@@ -59,7 +58,6 @@ export default function SettingsPage() {
               </div>
             </section>
 
-            {/* Notifications */}
             <section>
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Notifications
@@ -136,7 +134,6 @@ export default function SettingsPage() {
               </div>
             </section>
 
-            {/* Privacy & Security */}
             <section>
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Privacy & Security
@@ -164,7 +161,6 @@ export default function SettingsPage() {
               </div>
             </section>
 
-            {/* Account Actions */}
             <section>
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Account

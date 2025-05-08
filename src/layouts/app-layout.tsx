@@ -10,7 +10,6 @@ const AppLayout = () => {
 
   return (
     <div className="flex h-full overflow-hidden">
-      {/* Sidebar */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -20,7 +19,7 @@ const AppLayout = () => {
       >
         <Sidebar />
       </motion.div>
-      {/* Main content area */}
+
       <motion.div
         key={location.pathname}
         initial={{ opacity: 0 }}
@@ -31,7 +30,7 @@ const AppLayout = () => {
       >
         <Outlet />
       </motion.div>
-      <MobileNavigationBar /> {/* Added MobileNavigationBar */}
+      <MobileNavigationBar />
     </div>
   );
 };

@@ -99,7 +99,6 @@ const Sidebar = () => {
 
   return (
     <div className="flex h-full flex-col">
-      {/* Header */}
       <div className="flex h-16 items-center justify-between px-4 border-b border-gray-200 dark:border-gray-800">
         <motion.div
           initial={{ opacity: 0 }}
@@ -116,9 +115,7 @@ const Sidebar = () => {
         <ThemeSwitcher />
       </div>
 
-      {/* Main sidebar content */}
       <div className="flex flex-1 flex-col overflow-hidden relative">
-        {/* User Search Input */}
         <div className="p-4 border-b border-gray-200 dark:border-gray-800">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -146,7 +143,6 @@ const Sidebar = () => {
           </div>
         </div>
 
-        {/* User Search Results Overlay */}
         {isUserSearchFocused && userSearchQuery && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -199,7 +195,6 @@ const Sidebar = () => {
           </motion.div>
         )}
 
-        {/* Chat list */}
         <div className="flex-1 overflow-y-auto no-scrollbar">
           {!isUserSearchFocused && (
             <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 px-4 pt-4 pb-2">
@@ -209,7 +204,6 @@ const Sidebar = () => {
           <ChatList />
         </div>
 
-        {/* Bottom navigation */}
         <div className="p-4 border-t border-gray-200 dark:border-gray-800">
           <nav className="flex flex-col space-y-1">
             {navItems.map((item) => (

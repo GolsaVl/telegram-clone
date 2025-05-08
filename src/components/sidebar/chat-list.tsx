@@ -83,7 +83,6 @@ const ChatList = () => {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Search bar */}
       <div className="p-4 border-b dark:border-gray-800">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -99,7 +98,6 @@ const ChatList = () => {
         </div>
       </div>
 
-      {/* Toggle Archived/Active Chats */}
       <div className="px-4 py-2 border-b dark:border-gray-800">
         <button
           onClick={() => setShowArchived(!showArchived)}
@@ -119,7 +117,6 @@ const ChatList = () => {
         </button>
       </div>
 
-      {/* Chat list */}
       <div className="flex-1 overflow-y-auto no-scrollbar">
         {loading ? (
           <div className="space-y-3 p-4">
@@ -146,7 +143,6 @@ const ChatList = () => {
           >
             {chatsToDisplay.map((chat) => (
               <motion.div key={chat.id} variants={itemVariants}>
-                {/* Link is now inside ChatListItem to allow button clicks on the item itself */}
                 <ChatListItem
                   chat={chat}
                   isActive={chat.id === chatId}

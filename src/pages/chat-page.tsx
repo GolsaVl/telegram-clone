@@ -118,7 +118,6 @@ export default function ChatPage() {
       <ChatHeader chat={currentChat} />
       <div className="flex-1 overflow-y-auto p-4">
         {" "}
-        {/* Removed space-y-4 for AnimatePresence direct children */}
         <AnimatePresence initial={false}>
           {messages.map((message, index) => (
             <motion.div
@@ -151,7 +150,7 @@ export default function ChatPage() {
             </motion.div>
           ))}
         </AnimatePresence>
-        <div ref={messagesEndRef} /> {/* For auto-scrolling */}
+        <div ref={messagesEndRef} />
       </div>
 
       <div className="border-t p-4 bg-white dark:bg-gray-900">
@@ -171,7 +170,6 @@ export default function ChatPage() {
           }}
           className="flex items-center gap-2"
         >
-          {/* Media Buttons - for demonstration */}
           <button
             type="button"
             onClick={() =>
